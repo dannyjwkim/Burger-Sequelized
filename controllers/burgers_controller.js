@@ -12,13 +12,13 @@ router.get('/', function(req, res) {
 
 //when directed to burgers route, get burger.js logic, call functions within it. 
 router.get('/burgers', function(req, res) {
-  models.burgers.findAll().then(function(data){
+  burger.burgers.findAll().then(function(data){
     res.render('index', { burgers: data });
     });
 });
 
 router.post('/burgers/create', function(req, res) {
-  models.burgers.create({
+  burger.burgers.create({
     burger_name:req.body.name,
     devoured: 0
   }).then(function(){
@@ -28,7 +28,7 @@ router.post('/burgers/create', function(req, res) {
 
 router.put('/burgers/update/devour/:id', function(req, res) {
   //tableName, column, ID, callback
-  models.burgers.update({
+  burger.burgers.update({
     devoured:1
   },{where:{
     id:req.params.id
@@ -40,7 +40,7 @@ router.put('/burgers/update/devour/:id', function(req, res) {
 
 router.delete('/burgers/delete/:id', function(req, res) {
   //run burger.js logic of deleteOne(table,id,callback)
-  models.burgers.destroy(
+  burger.burgers.destroy(
     {where:{
       id:req.params.id
     }}).then(function(){
