@@ -1,9 +1,10 @@
 var express = require("express");
+var db = require("./models");
 var bodyParser = require("body-parser");
 var methodOverride = require("method-override");
 
+var PORT = process.env.NODE_ENV || 8080;
 var app = express();
-var PORT = process.env.PORT || 8080;
 
 //serve up public folder and all content as static files to server.
 app.use(express.static('public'));
@@ -30,6 +31,8 @@ app.set('view engine', 'handlebars');
 var routes = require('./controllers/burgers_controller.js');
 app.use('/', routes);
 
-app.listen(PORT, function () {
-  console.log("App listening on PORT " + PORT);
+db.sequelize.sync().then(function() {
+  app.listen(PORT, function() {
+    console.log("App listening on PORT " + PORT);
+  });
 });
